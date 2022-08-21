@@ -178,7 +178,7 @@ const skills = [
   'Typescript',
   'Node.js',
   'Vue',
-  'WordPres',
+  'Wordpress',
   'Quasar',
   'Ionic',
   'Angular',
