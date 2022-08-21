@@ -17,9 +17,25 @@ const { title } = Astro.props as Props;
 		<meta name="og:type" content="website" />
 		<meta name="og:title" content={title} />
 		<title>{title}</title>
+		<!-- head -->
+        <script
+          type="text/partytown"
+          src="https://www.googletagmanager.com/gtag/js?id=9XR1WWPXZ9"
+        >
+        </script>
+        <script type="text/partytown">
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
+          gtag("config", "G-9XR1WWPXZ9");
+        </script>
+        <!-- more head -->
 	</head>
 	<body class="py-10">
 		<slot />
 	</body>
+
 </html>
 
