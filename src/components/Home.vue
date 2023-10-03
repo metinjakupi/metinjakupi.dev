@@ -52,7 +52,7 @@
   <main class="max-w-7xl p-3 mx-auto my-auto">
 
     <div :class="['grid', 'grid-cols-3', 'gap-6', 'p-4']">
-      <div
+      <a
           :key="i" v-for="(item, i) in gridItems"
           :href="item.link"
           :class="[
@@ -79,7 +79,7 @@
             {{ skill }}
           </span>
         </div>
-      </div>
+      </a>
 
     </div>
   </main>
@@ -123,7 +123,7 @@ const gridItems = ref([
   },
   {
     title: '',
-    link: 'https://github.com/yourusername',
+    link: 'https://github.com/metinjakupi',
     icon: 'github-mark.png',
     isLogo: false,
     classes: 'flex justify-center items-center flex-col border border-zinc-400 text-white',
@@ -167,7 +167,3 @@ const gridItems = ref([
 
 
 </script>
-
-<style scoped>
-
-</style>
