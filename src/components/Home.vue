@@ -51,7 +51,7 @@
 <template>
   <main class="max-w-7xl p-3 mx-auto my-auto">
 
-    <div :class="['grid', 'grid-cols-3', 'gap-6', 'p-4']">
+    <div :class="['grid', 'grid-cols-3', 'gap-6', 'p-4', 'grid-rows-6']">
       <a
           :key="i" v-for="(item, i) in gridItems"
           :href="item.link"
@@ -67,7 +67,7 @@
         'hover:scale-105',
         'transition-transform',
       ]"
-          :style="{ 'grid-column': 'span ' + item.colSpan }"
+          :style="{ 'grid-column': 'span ' + item.colSpan, 'grid-row': 'span ' + item.rowSpan  }"
       >
         <h3 class="text-2xl font-bold mb-4">{{ item.title }}</h3>
         <img v-if="item.icon && item.isLogo" :src="item.icon" class=" mt-4" alt="">
@@ -118,32 +118,9 @@ const gridItems = ref([
     title: 'Introduction',
     content: 'Hello, I am <b class="text-lg"> Metin Jakupi</b>. Dedicated Developer with a proven history of successful projects. Skilled in problem-solving and system architecture, adept at creating scalable web applications. Expert in understanding user requirements and delivering effective solutions. Capable of working autonomously and collaboratively.',
     classes: 'border text-white border-zinc-400',
-    colSpan: 2,
+    colSpan: 1,
+    rowSpan: 3,
     link: '#',
-  },
-  {
-    title: '',
-    link: 'https://github.com/metinjakupi',
-    icon: 'github-mark.png',
-    isLogo: false,
-    classes: 'flex justify-center items-center flex-col border border-zinc-400 text-white',
-    colSpan: 1
-  },
-  {
-    title: '',
-    link: 'https://twitter.com/mjakupiiii',
-    icon: 'logo-white.png',
-    isLogo: false,
-    classes: 'flex justify-center items-center flex-col border border-zinc-400 text-white',
-    colSpan: 1
-  },
-  {
-    title: 'My Skills',
-    content: 'Here is my tech stack',
-    link: '#',
-    classes: 'border text-white border-zinc-400',
-    skills: skills,
-    colSpan: 1
   },
   {
     title: 'Work Experience',
@@ -154,13 +131,43 @@ const gridItems = ref([
     <strong>Senior Frontend Developer</strong><br>
     August 2017 – Present | Eagle IT Solutions`,
     classes: 'box__bg text-white',
-    colSpan: 1
+    colSpan: 1,
+    rowSpan: 6,
+  },
+
+  {
+    title: '',
+    link: 'https://twitter.com/mjakupiiii',
+    icon: 'logo-white.png',
+    isLogo: false,
+    classes: 'flex justify-center items-center flex-col border border-zinc-400 text-white',
+    colSpan: 1,
+    rowSpan: 3,
+  },
+  {
+    title: 'My Skills',
+    content: 'Here is my tech stack',
+    link: '#',
+    classes: 'border text-white border-zinc-400',
+    skills: skills,
+    colSpan: 1,
+    rowSpan: 3,
+  },
+  {
+    title: '',
+    link: 'https://github.com/metinjakupi',
+    icon: 'github-mark.png',
+    isLogo: false,
+    classes: 'flex justify-center items-center flex-col border border-zinc-400 text-white',
+    colSpan: 1,
+    rowSpan: 6,
   },
   {
     title: 'Contact Me',
     content: 'You can reach me at mjakupi@outlook.com or through my social profiles.',
     classes: 'border text-white border-zinc-400',
     colSpan: 2,
+    rowSpan: 3,
     link: '#',
   }
 ])
