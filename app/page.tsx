@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -27,11 +26,11 @@ export default function Home() {
               Software Engineer | Frontend Developer
             </div>
             <div>
-              Dedicated Developer with a proven history of successful
-              projects. Skilled in problem-solving and system architecture,
-              adept at creating scalable web applications. Expert in
-              understanding user requirements and delivering effective
-              solutions. Capable of working autonomously and collaboratively.
+              Dedicated Developer with a proven history of successful projects.
+              Skilled in problem-solving and system architecture, adept at
+              creating scalable web applications. Expert in understanding user
+              requirements and delivering effective solutions. Capable of
+              working autonomously and collaboratively.
             </div>
           </div>
           <img
@@ -69,16 +68,82 @@ export default function Home() {
                 Eagle IT Solutions | 2016 - 2024
               </div>
               <div>
-                At Eagle IT Solutions, I embarked on my programming journey, evolving from a junior developer to a lead role. Throughout this period, I honed my skills in full-stack development, mastered various technologies, and led multiple successful projects. This experience was instrumental in shaping my problem-solving abilities and fostering a deep understanding of software architecture and team leadership.
+                At Eagle IT Solutions, I embarked on my programming journey,
+                evolving from a junior developer to a lead role. Throughout this
+                period, I honed my skills in full-stack development, mastered
+                various technologies, and led multiple successful projects. This
+                experience was instrumental in shaping my problem-solving
+                abilities and fostering a deep understanding of software
+                architecture and team leadership.
               </div>
             </div>
             <div className="space-y-2">
               <div className="font-bold">Fullstack Developer</div>
+              <div className="text-muted-foreground">Zappter | 2019</div>
+              <div>
+                Worked as a fullstack developer at Zappter, focusing on building
+                a drag and drop application using PHP and jQuery. Gained
+                valuable experience in creating interactive web applications and
+                implementing user-friendly interfaces.
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="space-y-4 md:space-y-6">
+          <div className="font-bold">Projects</div>
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <div className="font-bold">Vue Marquee Package</div>
               <div className="text-muted-foreground">
-                Zappter | 2019
+                Technologies: Vue.js, JavaScript, npm
+              </div>
+              <div className="mb-4">
+                A Vue.js component that creates a scrolling marquee effect with
+                customizable options. I developed and maintained this package,
+                ensuring it meets modern web standards and is easy to integrate
+                into Vue applications.
+              </div>
+              <Link
+                href="https://www.npmjs.com/package/@mjakupi/vue-marquee"
+                target="_blank"
+                prefetch={false}
+              >
+                <Button className="mt-4" variant="outline">
+                  View Project
+                </Button>
+              </Link>
+            </div>
+
+            <div className="space-y-2">
+              <div className="font-bold">CSS Formatter</div>
+              <div className="text-muted-foreground">
+                Technologies: Next.js, Vercel, JavaScript
+              </div>
+              <div className="mb-4">
+                A web application that formats and beautifies CSS code, making
+                it easier to read and maintain. I developed this tool to provide
+                a user-friendly interface for developers to quickly format their
+                CSS with customizable options.
+              </div>
+              <Link
+                href="https://css-formater.vercel.app/"
+                target="_blank"
+                prefetch={false}
+              >
+             <Button className="mt-4" variant="outline">
+                  View Project
+                </Button>
+              </Link>
+            </div>
+            <div className="space-y-2">
+              <div className="font-bold">Dentistry Software (Private)</div>
+              <div className="text-muted-foreground">
+                Technologies: React, Node.js, PostgreSQL
               </div>
               <div>
-                Worked as a fullstack developer at Zappter, focusing on building a drag and drop application using PHP and jQuery. Gained valuable experience in creating interactive web applications and implementing user-friendly interfaces.
+                A custom software solution developed for dental practices to
+                manage patient records, appointments, and billing. This project
+                is private; for more information, please contact me directly.
               </div>
             </div>
           </div>
@@ -86,13 +151,21 @@ export default function Home() {
         <section className="space-y-4 md:space-y-6">
           <div className="font-bold">Connect with me</div>
           <div className="flex flex-wrap gap-4">
-            <Link href="https://github.com/metinjakupi" target="_blank" prefetch={false}>
+            <Link
+              href="https://github.com/metinjakupi"
+              target="_blank"
+              prefetch={false}
+            >
               <Button variant="outline">
                 <GitlabIcon className="w-5 h-5 mr-2" />
                 GitHub
               </Button>
             </Link>
-            <Link href="https://x.com/mjakupiiii" target="_blank" prefetch={false}>
+            <Link
+              href="https://x.com/mjakupiiii"
+              target="_blank"
+              prefetch={false}
+            >
               <Button variant="outline">
                 <TwitterIcon className="w-5 h-5 mr-2" />
                 Twitter
@@ -105,7 +178,7 @@ export default function Home() {
   );
 }
 
-function GitlabIcon(props) {
+function GitlabIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -124,7 +197,7 @@ function GitlabIcon(props) {
   );
 }
 
-function LinkedinIcon(props) {
+function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -145,7 +218,7 @@ function LinkedinIcon(props) {
   );
 }
 
-function TwitterIcon(props) {
+function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
