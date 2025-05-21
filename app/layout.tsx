@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { GoogleTagManager } from '@next/third-parties/google'
+
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -28,10 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId="GTM-PZ9RQ34" />
       <body
         className={cn("antialiased", fontHeading.variable, fontBody.variable)}
       >
         {children}
+
       </body>
     </html>
   );

@@ -1,7 +1,30 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import fs from 'fs/promises';
+import path from 'path';
+import matter from 'gray-matter';
 
-export default function Home() {
+export default async function Home() {
+  // Blog sneak peek logic
+  const contentDir = path.join(process.cwd(), 'content');
+  const files = await fs.readdir(contentDir);
+  const posts = await Promise.all(
+    files.filter(f => f.endsWith('.md')).map(async (file) => {
+      const filePath = path.join(contentDir, file);
+      const fileContent = await fs.readFile(filePath, 'utf8');
+      const { data } = matter(fileContent);
+      return {
+        slug: file.replace(/\.md$/, ''),
+        title: data.title,
+        date: data.date,
+        description: data.description,
+      };
+    })
+  );
+  // Sort posts by date descending
+  posts.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const latest = posts[0];
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-[#f5f5f5] text-foreground relative">
       <div
@@ -48,19 +71,44 @@ export default function Home() {
             <div>AWS</div>
             <div>CI/CD</div>
             <div>Digital Ocean</div>
-            <div>Docker</div>
             <div>Next.js</div>
             <div>Node.js</div>
             <div>Nest.js</div>
             <div>React</div>
             <div>Supabase</div>
+            <div>Firebase</div>
             <div>Tailwind</div>
             <div>Vue</div>
+            <div>Ionic</div>
             <div>Wordpress</div>
           </div>
         </section>
         <section className="space-y-4 md:space-y-6">
           <div className="font-bold">Experience</div>
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <div className="font-bold">Software Engineer</div>
+              <div className="text-muted-foreground">
+                Hoyo Tech | 2024 - Present
+              </div>
+              <div>
+                I build scalable and efficient web applications as a software
+                engineer at Hoyo Tech. My role also includes leading the
+                frontend team, where I ensure the delivery of high-quality user
+                experiences.
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-bold">Fullstack Developer</div>
+              <div className="text-muted-foreground">Zappter | 2019</div>
+              <div>
+                Worked as a fullstack developer at Zappter, focusing on building
+                a drag and drop application using PHP and jQuery. Gained
+                valuable experience in creating interactive web applications and
+                implementing user-friendly interfaces.
+              </div>
+            </div>
+          </div>
           <div className="space-y-8">
             <div className="space-y-2">
               <div className="font-bold">Lead Software Engineer</div>
@@ -75,16 +123,6 @@ export default function Home() {
                 experience was instrumental in shaping my problem-solving
                 abilities and fostering a deep understanding of software
                 architecture and team leadership.
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="font-bold">Fullstack Developer</div>
-              <div className="text-muted-foreground">Zappter | 2019</div>
-              <div>
-                Worked as a fullstack developer at Zappter, focusing on building
-                a drag and drop application using PHP and jQuery. Gained
-                valuable experience in creating interactive web applications and
-                implementing user-friendly interfaces.
               </div>
             </div>
           </div>
@@ -147,6 +185,23 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+        <section className="space-y-4 md:space-y-6">
+          <div className="font-bold text-lg">Recent Blog Post</div>
+          {latest ? (
+            <div className="">
+              <Link href={`/blog/${latest.slug}`} className="hover:underline">
+                <h2 className="text-xl font-semibold mb-1">{latest.title}</h2>
+              </Link>
+              <p className="text-gray-500 text-xs mb-2">{latest.date}</p>
+              <p className="text-gray-700 text-sm mb-4">{latest.description}</p>
+              <Link href="/blog">
+                <Button variant="outline">View all blog posts</Button>
+              </Link>
+            </div>
+          ) : (
+            <p className="text-gray-500">No blog posts yet.</p>
+          )}
         </section>
         <section className="space-y-4 md:space-y-6">
           <div className="font-bold">Connect with me</div>
