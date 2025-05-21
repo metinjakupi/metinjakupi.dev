@@ -147,6 +147,70 @@ The performance improvements from this approach were significant:
 
 ---
 
+### Visualizing Waterfall vs Parallel Data Fetching
+
+**Waterfall (Sequential) Data Fetching:**
+
+```
+Server Component
+    |
+    |-- fetch A (waits for A to finish)
+    |      |
+    |      v
+    |-- fetch B (waits for B to finish)
+    |      |
+    |      v
+    |-- fetch C (waits for C to finish)
+    |      |
+    |      v
+  Render
+```
+
+- Each fetch starts only after the previous one finishes.
+- Total time = A + B + C
+
+**Parallel Data Fetching (with Promises and Suspense):**
+
+```
+Server Component
+    |
+    |-- fetch A (start)
+    |-- fetch B (start)
+    |-- fetch C (start)
+    |      |
+    |      v
+  Pass Promises to Client Components
+    |
+    |-- <Suspense> for A
+    |-- <Suspense> for B
+    |-- <Suspense> for C
+    |
+  Render as soon as each is ready
+```
+
+- All fetches start at the same time.
+- Each section of the UI can render as soon as its data is ready.
+- Total time = max(A, B, C)
+
+**Visual Comparison**
+
+Waterfall:
+```
+[====A====][====B====][====C====][Render]
+```
+
+Parallel:
+```
+[====A====]
+[====B====]
+[====C====]
+     |
+   [Render]
+```
+- In parallel, rendering can happen as soon as the slowest fetch finishes.
+
+---
+
 ## A Real-World Example: Product Detail Page
 
 Let me share a concrete example from our e-commerce application's product detail page. This page has multiple data requirements:
@@ -253,8 +317,8 @@ Handle errors both at the server component level and the client component level:
 **Server-side error handling with fallback data:**
 
 ```ts
-const productsPromise: Promise<Product[]> = db.product
-  .findMany()
+const productsPromise: Promise<Product[]> = fetch('https://api.mystore.com/products')
+  .then(res => res.json())
   .catch(error => {
     console.error('Failed to fetch products:', error);
     return []; // Return empty array as fallback
