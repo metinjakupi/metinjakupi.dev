@@ -7,11 +7,13 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 interface BlogDetailProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailProps) {
-  const filePath = path.join(process.cwd(), 'content', `${params.slug}.md`);
+
+  const {slug} = await params;
+  const filePath = path.join(process.cwd(), 'content', `${slug}.md`);
   try {
     const fileContent = await fs.readFile(filePath, 'utf8');
     const { data, content } = matter(fileContent);
@@ -58,7 +60,8 @@ export default async function BlogDetailPage({ params }: BlogDetailProps) {
 }
 
 export async function generateMetadata({ params }: BlogDetailProps): Promise<Metadata> {
-  const filePath = path.join(process.cwd(), 'content', `${params.slug}.md`);
+  const {slug} = await params;
+  const filePath = path.join(process.cwd(), 'content', `${slug}.md`);
   try {
     const fileContent = await fs.readFile(filePath, 'utf8');
     const { data } = matter(fileContent);
