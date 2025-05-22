@@ -151,7 +151,26 @@ export default async function Home() {
                 </Button>
               </Link>
             </div>
-
+            <div className="space-y-2">
+              <div className="font-bold">SVG2Icon </div>
+              <div className="text-muted-foreground">
+                Technologies: Next.js
+              </div>
+              <div className="mb-4">
+                A web application that converts SVG to Iconify icons. I developed this tool to provide
+                a user-friendly interface for developers to quickly convert their
+                SVG to Iconify icons.
+              </div>
+              <Link
+                href="https://svg2icon.vercel.app/"
+                target="_blank"
+                prefetch={false}
+              >
+             <Button className="mt-4" variant="outline">
+                  View Project
+                </Button>
+              </Link>
+            </div>
             <div className="space-y-2">
               <div className="font-bold">CSS Formatter</div>
               <div className="text-muted-foreground">
