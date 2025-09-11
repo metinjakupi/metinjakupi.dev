@@ -73,12 +73,11 @@ export default async function Home() {
             <div>Digital Ocean</div>
             <div>Next.js</div>
             <div>Node.js</div>
-            <div>Nest.js</div>
             <div>React</div>
+            <div>Shopify</div>
             <div>Supabase</div>
             <div>Firebase</div>
             <div>Tailwind</div>
-            <div>Vue</div>
             <div>Ionic</div>
             <div>Wordpress</div>
           </div>
@@ -166,7 +165,7 @@ export default async function Home() {
                 target="_blank"
                 prefetch={false}
               >
-             <Button className="mt-4" variant="outline">
+                <Button className="mt-4" variant="outline">
                   View Project
                 </Button>
               </Link>
@@ -187,7 +186,7 @@ export default async function Home() {
                 target="_blank"
                 prefetch={false}
               >
-             <Button className="mt-4" variant="outline">
+                <Button className="mt-4" variant="outline">
                   View Project
                 </Button>
               </Link>
