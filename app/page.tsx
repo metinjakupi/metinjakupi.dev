@@ -197,7 +197,7 @@ export default async function Home() {
                       style={{ fontFamily: "var(--font-mono)" }}
                       className="text-xs uppercase tracking-wider text-neutral-500"
                     >
-                      {project.type} // {project.tech}
+                      {project.type} {"//"} {project.tech}
                     </p>
                     <p className="max-w-2xl pt-1 text-sm leading-6 text-neutral-400">
                       {project.summary}
