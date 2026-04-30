@@ -1,74 +1,117 @@
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
-import Link from 'next/link';
+import Link from "next/link";
+import type { Metadata } from "next";
+import { JetBrains_Mono, Inter } from "next/font/google";
+import { getPosts } from "@/lib/portfolio-data";
 
-interface PostMeta {
-  slug: string;
-  title?: string;
-  date?: string;
-  description?: string;
-}
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-mono",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
+
+const ACCENT = "#a3e635";
+
+const blogDescription =
+  "Technical writing by Metin Jakupi on React, Next.js, frontend architecture, and product engineering.";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: blogDescription,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Blog | Metin Jakupi",
+    description: blogDescription,
+    url: "/blog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Metin Jakupi",
+    description: blogDescription,
+    images: ["/twitter-image"],
+  },
+};
 
 export default async function BlogPage() {
-  const contentDir = path.join(process.cwd(), 'content');
-  const files = await fs.readdir(contentDir);
-  const posts: PostMeta[] = await Promise.all(
-    files.filter(f => f.endsWith('.md')).map(async (file) => {
-      const filePath = path.join(contentDir, file);
-      const fileContent = await fs.readFile(filePath, 'utf8');
-      const { data } = matter(fileContent);
-      return {
-        slug: file.replace(/\.md$/, ''),
-        title: data.title,
-        date: data.date,
-        description: data.description,
-      };
-    })
-  );
+  const posts = await getPosts();
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-[#f5f5f5] text-foreground relative">
-
+    <div
+      className={`${mono.variable} ${inter.variable} relative flex min-h-[100dvh] flex-col bg-[#0a0a0a] text-neutral-300`}
+      style={{ fontFamily: "var(--font-sans)" }}
+    >
       <div
-        className="absolute inset-0 z-0"
-        style={
-          {
-            "--line": "#e0e0e0",
-            "--size": "50px",
-            background: `
-        linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size),
-        linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size)
-      `,
-            mask: "linear-gradient(-20deg, transparent 50%, white)",
-          } as React.CSSProperties
-        }
-      ></div>
-      <main className="max-w-2xl mx-auto p-8 relative z-10">
-        <div className="flex justify-start mb-8">
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
+        }}
+      />
+
+      <main className="relative z-10 mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 md:py-20">
+        <div className="mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium shadow-sm hover:bg-gray-100 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
-            aria-label="Back to home page"
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-[#a3e635]"
           >
-            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l-7 7 7 7" /></svg>
-            Back to Home
+            <span style={{ color: ACCENT }}>~</span> cd ../
+            <span className="text-neutral-600">·</span>
+            <span>back to home</span>
           </Link>
         </div>
-        <h1 className="text-3xl font-bold mb-8">Blog</h1>
-        <ul className="space-y-6">
-          {posts.map(post => (
-            <li key={post.slug} className="border-b pb-4">
-              <Link href={`/blog/${post.slug}`} className="hover:underline">
-                <h2 className="text-xl font-semibold">{post.title}</h2>
+
+        <div className="mb-10 space-y-3">
+          <p
+            style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
+            className="text-xs uppercase tracking-[0.2em]"
+          >
+            §writing
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            Blog
+          </h1>
+          <p className="max-w-2xl leading-7 text-neutral-400">
+            {blogDescription}
+          </p>
+        </div>
+
+        <ul className="divide-y divide-neutral-800 border-y border-neutral-800">
+          {posts.map((post, i) => (
+            <li key={post.slug} className="py-6">
+              <Link href={`/blog/${post.slug}`} className="group block space-y-2">
+                <div className="flex items-baseline gap-3">
+                  <span
+                    style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
+                    className="text-xs"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p
+                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="text-xs text-neutral-500"
+                  >
+                    {post.date}
+                  </p>
+                </div>
+                <h2 className="max-w-2xl text-2xl font-bold leading-snug text-white group-hover:text-[#a3e635]">
+                  {post.title}
+                </h2>
+                <p className="max-w-2xl leading-7 text-neutral-400">
+                  {post.description}
+                </p>
               </Link>
-              <p className="text-gray-500 text-xs mb-1">{post.date}</p>
-              <p className="text-gray-700 text-sm">{post.description}</p>
             </li>
           ))}
         </ul>
       </main>
     </div>
-
   );
-} 
+}
