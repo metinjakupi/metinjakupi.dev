@@ -102,7 +102,7 @@ export default async function Home() {
               </span>
             </h1>
             <Image
-              src="/me.png"
+              src="/mjakupi.jpg"
               alt="Metin Jakupi"
               className="h-28 w-28 rounded-full object-cover ring-1 ring-neutral-700 md:h-32 md:w-32 md:ml-auto"
               width={220}
