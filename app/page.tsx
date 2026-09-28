@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { JetBrains_Mono, Inter } from "next/font/google";
-import { siteDescription, siteTitle } from "@/lib/seo";
+import { absoluteUrl, person, siteDescription, siteName, siteTitle } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { ACCENT, SectionLabel } from "@/components/section-label";
+import { brickyard, moreWork } from "@/lib/games-data";
 import {
   domainExperience,
   experience,
@@ -22,8 +25,6 @@ const inter = Inter({
   display: "swap",
   variable: "--font-sans",
 });
-
-const ACCENT = "#a3e635";
 
 export const metadata: Metadata = {
   title: {
@@ -64,6 +65,22 @@ export default async function Home() {
         }}
       />
 
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            person,
+            {
+              "@type": "WebSite",
+              "@id": absoluteUrl("/#website"),
+              url: absoluteUrl("/"),
+              name: siteName,
+              description: siteDescription,
+              publisher: { "@id": absoluteUrl("/#person") },
+            },
+          ],
+        }}
+      />
       <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-col gap-20 px-4 py-16 sm:px-6 md:py-24">
         <section aria-labelledby="intro-heading" className="space-y-10">
           <div
@@ -121,6 +138,13 @@ export default async function Home() {
               ./view-work
             </Link>
             <Link
+              href="/games"
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="inline-flex h-10 items-center border border-neutral-700 px-5 text-sm font-medium text-neutral-200 hover:border-neutral-400"
+            >
+              ./games
+            </Link>
+            <Link
               href="#contact"
               style={{ fontFamily: "var(--font-mono)" }}
               className="inline-flex h-10 items-center border border-neutral-700 px-5 text-sm font-medium text-neutral-200 hover:border-neutral-400"
@@ -173,12 +197,43 @@ export default async function Home() {
           </div>
         </section>
 
+        <section aria-labelledby="games-heading" className="space-y-6">
+          <SectionLabel num="03" label="games.exe" id="games-heading" />
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              { title: brickyard.title, href: brickyard.href, image: brickyard.hero, summary: "Buy a set, open the box and build it from the instruction booklet." },
+              ...moreWork.map((g) => ({ title: g.title, href: g.href, image: g.image, summary: g.summary })),
+            ].map((g) => (
+              <Link key={g.title} href={g.href} target="_blank" rel="noreferrer" className="group block space-y-3">
+                <div className="overflow-hidden ring-1 ring-neutral-800">
+                  <Image
+                    src={g.image.src}
+                    alt={g.image.alt}
+                    placeholder="blur"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <h3 className="font-bold text-white group-hover:text-[#a3e635]">{g.title}</h3>
+                <p className="line-clamp-2 text-sm leading-6 text-neutral-400">{g.summary}</p>
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/games"
+            style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
+            className="inline-block text-xs hover:opacity-80"
+          >
+            cd ./games — how I build them, and how we can work together →
+          </Link>
+        </section>
+
         <section
           id="projects"
           aria-labelledby="projects-heading"
           className="scroll-mt-8 space-y-6"
         >
-          <SectionLabel num="03" label={`projects[${projects.length}]`} />
+          <SectionLabel num="04" label={`projects[${projects.length}]`} />
           <ol className="divide-y divide-neutral-800 border-y border-neutral-800">
             {projects.map((project, i) => {
               const inner = (
@@ -238,7 +293,7 @@ export default async function Home() {
         </section>
 
         <section aria-labelledby="blog-heading" className="space-y-6">
-          <SectionLabel num="04" label="writing.md" />
+          <SectionLabel num="05" label="writing.md" />
           {latest ? (
             <article className="space-y-2">
               <p
@@ -274,7 +329,7 @@ export default async function Home() {
           aria-labelledby="contact-heading"
           className="scroll-mt-8 space-y-6"
         >
-          <SectionLabel num="05" label="contact" />
+          <SectionLabel num="06" label="contact" />
           <div
             style={{ fontFamily: "var(--font-mono)" }}
             className="space-y-2 text-sm"
@@ -309,25 +364,6 @@ export default async function Home() {
           </div>
         </section>
       </main>
-    </div>
-  );
-}
-
-function SectionLabel({ num, label }: { num: string; label: string }) {
-  return (
-    <div className="flex items-baseline gap-3 border-b border-neutral-800 pb-3">
-      <span
-        style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-        className="text-xs"
-      >
-        §{num}
-      </span>
-      <h2
-        style={{ fontFamily: "var(--font-mono)" }}
-        className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-300"
-      >
-        {label}
-      </h2>
     </div>
   );
 }

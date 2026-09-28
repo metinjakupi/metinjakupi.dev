@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     description: blogDescription,
     url: "/blog",
     type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Blog | Metin Jakupi" }],
   },
   twitter: {
     card: "summary_large_image",
