@@ -1,22 +1,18 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { siteDescription, siteName, siteTitle, siteUrl } from "@/lib/seo";
 
 
-const fontHeading = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-heading",
-});
+const sans = Geist({ subsets: ["latin"], display: "swap", variable: "--font-sans" });
+const mono = Geist_Mono({ subsets: ["latin"], display: "swap", variable: "--font-mono" });
 
-const fontBody = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-body",
-});
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -90,10 +86,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <GoogleTagManager gtmId="GTM-PZ9RQ34" />
       <body
-        className={cn("antialiased", fontHeading.variable, fontBody.variable)}
+        className={cn("bg-[#09090b] font-sans text-zinc-300 antialiased", sans.variable, mono.variable)}
       >
         {children}
       </body>

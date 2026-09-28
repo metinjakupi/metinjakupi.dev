@@ -1,44 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { JetBrains_Mono, Inter } from "next/font/google";
-import { absoluteUrl, person, siteDescription, siteName, siteTitle } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
-import { ACCENT, SectionLabel } from "@/components/section-label";
-import { brickyard, moreWork } from "@/lib/games-data";
-import {
-  domainExperience,
-  experience,
-  getPosts,
-  projects,
-} from "@/lib/portfolio-data";
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-mono",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
-});
+import { SiteShell } from "@/components/site/shell";
+import { LIME } from "@/components/site/theme";
+import { ContactCta } from "@/components/site/contact-cta";
+import { buttonGhost, buttonPrimary, SectionHead, Tags, WorkCard } from "@/components/site/ui";
+import { brickyard, process as buildProcess } from "@/lib/games-data";
+import { getPosts } from "@/lib/portfolio-data";
+import { absoluteUrl, person, siteDescription, siteName, siteTitle } from "@/lib/seo";
+import { experience, games, numbers, privateWork, services, work } from "@/lib/showcase";
 
 export const metadata: Metadata = {
-  title: {
-    absolute: siteTitle,
-  },
+  title: { absolute: siteTitle },
   description: siteDescription,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    url: "/",
-    title: siteTitle,
-    description: siteDescription,
-  },
+  alternates: { canonical: "/" },
+  openGraph: { url: "/", title: siteTitle, description: siteDescription },
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
@@ -48,322 +25,192 @@ export const metadata: Metadata = {
   },
 };
 
+const stack = ["React", "Next.js", "TypeScript", "Node.js", "three.js", "WebGPU", "Rust", "WebAssembly", "Shopify"];
+
 export default async function Home() {
   const posts = await getPosts();
-  const latest = posts[0];
-
+  const [, ...otherGames] = games;
   return (
-    <div
-      className={`${mono.variable} ${inter.variable} relative min-h-[100dvh] bg-[#0a0a0a] text-neutral-300`}
-      style={{ fontFamily: "var(--font-sans)" }}
-    >
-      <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
-        }}
-      />
-
+    <SiteShell>
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@graph": [
             person,
-            {
-              "@type": "WebSite",
-              "@id": absoluteUrl("/#website"),
-              url: absoluteUrl("/"),
-              name: siteName,
-              description: siteDescription,
-              publisher: { "@id": absoluteUrl("/#person") },
-            },
+            { "@type": "WebSite", "@id": absoluteUrl("/#website"), url: absoluteUrl("/"), name: siteName, description: siteDescription, publisher: { "@id": absoluteUrl("/#person") } },
           ],
         }}
       />
-      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-col gap-20 px-4 py-16 sm:px-6 md:py-24">
-        <section aria-labelledby="intro-heading" className="space-y-10">
-          <div
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="space-y-1 text-sm leading-7"
-          >
-            <p className="text-neutral-500">
-              <span style={{ color: ACCENT }}>~</span> whoami
-            </p>
-            <p className="text-neutral-200">metin jakupi</p>
-            <p className="text-neutral-500">
-              <span style={{ color: ACCENT }}>~</span> cat role.txt
-            </p>
-            <p className="text-neutral-200">senior frontend engineer</p>
-            <p className="text-neutral-500">
-              <span style={{ color: ACCENT }}>~</span> ls stack/
-            </p>
-            <p className="text-neutral-200">
-              react.tsx next.tsx node.ts typescript.ts
-            </p>
-            <p className="text-neutral-500">
-              <span style={{ color: ACCENT }}>~</span> uptime
-            </p>
-            <p className="text-neutral-200">8+ years shipping web software</p>
-          </div>
 
-          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_140px] md:items-start">
-            <h1
-              id="intro-heading"
-              className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl"
-            >
-              I build fast, maintainable web products —{" "}
-              <span style={{ color: ACCENT }}>
-                from developer tools to iGaming software and sports-data
-                integrations.
-              </span>
-            </h1>
-            <Image
-              src="/mjakupi.jpg"
-              alt="Metin Jakupi"
-              className="h-28 w-28 rounded-full object-cover ring-1 ring-neutral-700 md:h-32 md:w-32 md:ml-auto"
-              width={220}
-              height={220}
-              priority
-              sizes="128px"
-            />
+      {/* hero */}
+      <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-16 md:pt-24 lg:grid-cols-[1.1fr_1fr]">
+        <div className="space-y-7">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1 pr-4 text-sm text-zinc-300">
+            <Image src="/mjakupi.jpg" alt="Metin Jakupi" width={64} height={64} priority className="h-7 w-7 rounded-full object-cover" />
+            Senior Frontend Engineer · 8+ years
           </div>
-
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Link
-              href="#projects"
-              style={{ fontFamily: "var(--font-mono)", background: ACCENT }}
-              className="inline-flex h-10 items-center px-5 text-sm font-medium text-neutral-950 hover:opacity-90"
-            >
-              ./view-work
-            </Link>
-            <Link
-              href="/games"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="inline-flex h-10 items-center border border-neutral-700 px-5 text-sm font-medium text-neutral-200 hover:border-neutral-400"
-            >
-              ./games
-            </Link>
-            <Link
-              href="#contact"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="inline-flex h-10 items-center border border-neutral-700 px-5 text-sm font-medium text-neutral-200 hover:border-neutral-400"
-            >
-              ./contact
+          <h1 className="text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.035em] text-white sm:text-6xl lg:text-[4.25rem]">
+            I build fast, maintainable web products and <span style={{ color: LIME }}>browser games</span>.
+          </h1>
+          <p className="max-w-xl text-lg leading-8 text-zinc-400">
+            React and Next.js products, iGaming and sports-data platforms, and WebGPU games like Brickyard — designed, built and tested end
+            to end.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link href="#work" className={buttonPrimary} style={{ background: LIME }}>View work</Link>
+            <Link href={brickyard.href} target="_blank" rel="noreferrer" className={buttonGhost}>
+              <span style={{ color: LIME }}>▶</span> Play Brickyard
             </Link>
           </div>
-        </section>
+        </div>
+        <Terminal />
+      </section>
 
-        <section aria-labelledby="domains-heading" className="space-y-6">
-          <SectionLabel num="01" label="domain_experience" />
-          <div className="grid gap-px bg-neutral-800 md:grid-cols-2">
-            {domainExperience.map((item) => (
-              <article key={item.title} className="space-y-2 bg-[#0a0a0a] p-6">
-                <h3 className="font-bold text-white">{item.title}</h3>
-                <p className="leading-7 text-neutral-400">{item.summary}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+      {/* stack strip + numbers */}
+      <section className="mx-auto max-w-6xl space-y-10 px-5">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-white/[0.06] py-5">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">Stack</span>
+          {stack.map((t) => <span key={t} className="font-mono text-sm text-zinc-400">{t}</span>)}
+        </div>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {numbers.map((n) => (
+            <div key={n.label} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-6">
+              <p className="text-3xl font-semibold tracking-tight text-white md:text-4xl">{n.value}</p>
+              <p className="mt-1.5 text-sm text-zinc-400">{n.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <section aria-labelledby="experience-heading" className="space-y-6">
-          <SectionLabel num="02" label="experience.log" />
-          <div className="space-y-4">
-            {experience.map((item) => (
-              <article
-                key={`${item.company}-${item.role}`}
-                className="grid gap-3 border-l-2 pl-5 md:grid-cols-[160px_minmax(0,1fr)] md:items-baseline md:gap-6"
-                style={{ borderLeftColor: ACCENT }}
-              >
-                <p
-                  style={{ fontFamily: "var(--font-mono)" }}
-                  className="text-sm text-neutral-500"
-                >
-                  [{item.period}]
-                </p>
-                <div className="space-y-1">
-                  <h3 className="font-bold text-white">
-                    {item.role}{" "}
-                    <span className="font-normal text-neutral-500">
-                      @ {item.company}
-                    </span>
-                  </h3>
-                  <p className="leading-7 text-neutral-400">
-                    {item.description}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="games-heading" className="space-y-6">
-          <SectionLabel num="03" label="games.exe" id="games-heading" />
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              { title: brickyard.title, href: brickyard.href, image: brickyard.hero, summary: "Buy a set, open the box and build it from the instruction booklet." },
-              ...moreWork.map((g) => ({ title: g.title, href: g.href, image: g.image, summary: g.summary })),
-            ].map((g) => (
-              <Link key={g.title} href={g.href} target="_blank" rel="noreferrer" className="group block space-y-3">
-                <div className="overflow-hidden ring-1 ring-neutral-800">
-                  <Image
-                    src={g.image.src}
-                    alt={g.image.alt}
-                    placeholder="blur"
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-                <h3 className="font-bold text-white group-hover:text-[#a3e635]">{g.title}</h3>
-                <p className="line-clamp-2 text-sm leading-6 text-neutral-400">{g.summary}</p>
-              </Link>
-            ))}
-          </div>
-          <Link
-            href="/games"
-            style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-            className="inline-block text-xs hover:opacity-80"
-          >
-            cd ./games — how I build them, and how we can work together →
+      {/* featured: Brickyard, then the other games */}
+      <section id="games" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">
+        <SectionHead kicker="featured" title="Games and interactive 3D" note="Playable from a link, on any laptop or phone." />
+        <div className="grid items-center gap-10 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-transparent p-4 md:p-6 lg:grid-cols-[1.25fr_1fr]">
+          <Link href={brickyard.href} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(163,230,53,0.35)]">
+            <Image src={brickyard.hero.src} alt={brickyard.hero.alt} placeholder="blur" sizes="(min-width: 1024px) 640px, 100vw" className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]" />
           </Link>
-        </section>
-
-        <section
-          id="projects"
-          aria-labelledby="projects-heading"
-          className="scroll-mt-8 space-y-6"
-        >
-          <SectionLabel num="04" label={`projects[${projects.length}]`} />
-          <ol className="divide-y divide-neutral-800 border-y border-neutral-800">
-            {projects.map((project, i) => {
-              const inner = (
-                <div className="grid gap-3 py-5 md:grid-cols-[40px_minmax(0,1fr)_180px] md:items-baseline md:gap-6">
-                  <span
-                    style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-                    className="text-sm"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="space-y-1.5">
-                    <h3 className="text-xl font-bold leading-tight text-white">
-                      {project.title}
-                    </h3>
-                    <p
-                      style={{ fontFamily: "var(--font-mono)" }}
-                      className="text-xs uppercase tracking-wider text-neutral-500"
-                    >
-                      {project.type} {"//"} {project.tech}
-                    </p>
-                    <p className="max-w-2xl pt-1 text-sm leading-6 text-neutral-400">
-                      {project.summary}
-                    </p>
-                  </div>
-                  <span
-                    style={{ fontFamily: "var(--font-mono)" }}
-                    className="text-xs text-neutral-500 md:text-right"
-                  >
-                    {project.href ? (
-                      <span className="text-neutral-300 group-hover:text-[#a3e635]">
-                        {project.cta} →
-                      </span>
-                    ) : (
-                      "-- private --"
-                    )}
-                  </span>
+          <div className="space-y-5 px-2 pb-2">
+            <Tags items={["Browser game", "WebGPU", "Rust → WASM"]} />
+            <h3 className="text-3xl font-semibold tracking-tight text-white">Brickyard</h3>
+            <p className="leading-7 text-zinc-400">{brickyard.pitch}</p>
+            <dl className="grid grid-cols-2 gap-3">
+              {brickyard.facts.map((f) => (
+                <div key={f.label} className="rounded-lg border border-white/[0.07] p-3">
+                  <dt className="font-mono text-lg font-semibold" style={{ color: LIME }}>{f.value}</dt>
+                  <dd className="mt-0.5 text-xs leading-5 text-zinc-400">{f.label}</dd>
                 </div>
-              );
-              return (
-                <li key={project.title}>
-                  {project.href ? (
-                    <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group block transition-colors hover:bg-neutral-900/40"
-                    >
-                      {inner}
-                    </Link>
-                  ) : (
-                    inner
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-
-        <section aria-labelledby="blog-heading" className="space-y-6">
-          <SectionLabel num="05" label="writing.md" />
-          {latest ? (
-            <article className="space-y-2">
-              <p
-                style={{ fontFamily: "var(--font-mono)" }}
-                className="text-xs text-neutral-500"
-              >
-                {latest.date}
-              </p>
-              <Link
-                href={`/blog/${latest.slug}`}
-                className="group inline-block max-w-2xl"
-              >
-                <h3 className="text-2xl font-bold leading-snug text-white group-hover:text-[#a3e635]">
-                  {latest.title}
-                </h3>
-              </Link>
-              <p className="max-w-2xl pt-1 text-sm leading-6 text-neutral-400">
-                {latest.description}
-              </p>
-              <Link
-                href="/blog"
-                style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-                className="inline-block pt-2 text-xs hover:opacity-80"
-              >
-                cd ./blog →
-              </Link>
-            </article>
-          ) : null}
-        </section>
-
-        <section
-          id="contact"
-          aria-labelledby="contact-heading"
-          className="scroll-mt-8 space-y-6"
-        >
-          <SectionLabel num="06" label="contact" />
-          <div
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="space-y-2 text-sm"
-          >
-            <p>
-              <span className="text-neutral-500">$</span> open{" "}
-              <Link
-                href="https://github.com/metinjakupi"
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: ACCENT }}
-                className="hover:underline underline-offset-4"
-              >
-                github.com/metinjakupi
-              </Link>
-            </p>
-            <p>
-              <span className="text-neutral-500">$</span> open{" "}
-              <Link
-                href="https://x.com/mjakupiiii"
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: ACCENT }}
-                className="hover:underline underline-offset-4"
-              >
-                x.com/mjakupiiii
-              </Link>
-            </p>
-            <p className="pt-3 text-neutral-500">
-              <span style={{ color: ACCENT }}>~</span> exit
-            </p>
+              ))}
+            </dl>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <Link href={brickyard.href} target="_blank" rel="noreferrer" className="inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold text-zinc-950" style={{ background: LIME }}>Play it</Link>
+              <Link href="/games" className="inline-flex h-10 items-center rounded-lg border border-white/15 px-4 text-sm font-semibold text-white hover:border-white/30">Read the case study</Link>
+            </div>
           </div>
-        </section>
-      </main>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          {otherGames.map((g) => <WorkCard key={g.title} item={g} />)}
+        </div>
+      </section>
+
+      {/* selected work */}
+      <section id="work" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">
+        <SectionHead kicker="work" title="Selected work" note="Client sites, apps and developer tools." />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {work.map((w) => <WorkCard key={w.title} item={w} />)}
+        </div>
+        <div className="grid gap-5 md:grid-cols-3">
+          {privateWork.map((p) => (
+            <article key={p.title} className="rounded-xl border border-dashed border-white/[0.12] p-6">
+              <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500">
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                {p.kind}
+              </p>
+              <h3 className="mt-2 font-semibold text-white">{p.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-zinc-400">{p.summary}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* services + process */}
+      <section id="services" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">
+        <SectionHead kicker="services" title="What I can build for you" note="From a playable prototype to a tested launch." />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s) => (
+            <article key={s.title} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 transition hover:border-white/15">
+              <span className="grid h-10 w-10 place-items-center rounded-lg border border-white/10" style={{ color: LIME }}>
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={s.icon} /></svg>
+              </span>
+              <h3 className="mt-5 font-semibold text-white">{s.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-zinc-400">{s.body}</p>
+            </article>
+          ))}
+        </div>
+        <ol className="grid gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07] md:grid-cols-5">
+          {buildProcess.map((step, i) => (
+            <li key={step.title} className="bg-[#0c0c0f] p-5">
+              <p className="font-mono text-xs text-zinc-500"><span style={{ color: LIME }}>{String(i + 1).padStart(2, "0")}</span> · {step.when}</p>
+              <h3 className="mt-2 font-semibold text-white">{step.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-zinc-400">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* experience */}
+      <section id="experience" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">
+        <SectionHead kicker="experience" title="Eight years of shipping web software" />
+        <ol className="relative space-y-8 border-l border-white/10 pl-8">
+          {experience.map((e) => (
+            <li key={e.company} className="relative">
+              <span className="absolute -left-[37px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ring-[#09090b]" style={{ background: LIME }} />
+              <p className="font-mono text-xs text-zinc-500">{e.period}</p>
+              <h3 className="mt-1 font-semibold text-white">{e.role} <span className="font-normal text-zinc-400">· {e.company}</span></h3>
+              <p className="mt-1.5 max-w-3xl leading-7 text-zinc-400">{e.description}</p>
+            </li>
+          ))}
+        </ol>
+        {posts[0] ? (
+          <Link href={`/blog/${posts[0].slug}`} className="group flex flex-wrap items-baseline justify-between gap-2 rounded-xl border border-white/[0.07] p-5 hover:border-white/15">
+            <span className="text-sm text-zinc-400">
+              <span className="mr-3 font-mono text-xs uppercase tracking-wider text-zinc-500">Latest post</span>
+              <span className="text-white group-hover:underline">{posts[0].title}</span>
+            </span>
+            <span className="font-mono text-xs text-zinc-500">{posts[0].date} →</span>
+          </Link>
+        ) : null}
+      </section>
+
+      <ContactCta />
+    </SiteShell>
+  );
+}
+
+// The hero's terminal: real facts, a blinking cursor, no JavaScript.
+function Terminal() {
+  const lines: [string, string][] = [
+    ["whoami", "metin jakupi — senior frontend engineer"],
+    ["cat stack.txt", "react · next.js · typescript · node · three.js · webgpu · rust/wasm"],
+    ["ls ~/shipped", "brickyard/  kebap-haus/  micro-24/  hotel-desaret/  activitea/  svg2icon/"],
+    ["uptime", "8+ years shipping web software"],
+  ];
+  return (
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0c0c0f]/90 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] backdrop-blur" role="img" aria-label="Terminal: Metin Jakupi, senior frontend engineer; React, Next.js, TypeScript, Node, three.js, WebGPU, Rust and WebAssembly; 8+ years shipping web software">
+      <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+        <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+        <span className="ml-3 font-mono text-xs text-zinc-500">~/metin — zsh</span>
+      </div>
+      <div className="space-y-3 p-5 font-mono text-[13px] leading-6 [overflow-wrap:anywhere] sm:text-sm">
+        {lines.map(([cmd, out]) => (
+          <div key={cmd}>
+            <p className="text-zinc-500"><span style={{ color: LIME }}>❯</span> <span className="text-zinc-200">{cmd}</span></p>
+            <p className="text-zinc-400">{out}</p>
+          </div>
+        ))}
+        <p className="text-zinc-500"><span style={{ color: LIME }}>❯</span> <span className="inline-block h-4 w-2 translate-y-0.5 animate-pulse" style={{ background: LIME }} /></p>
+      </div>
     </div>
   );
 }

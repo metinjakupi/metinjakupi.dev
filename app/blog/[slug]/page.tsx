@@ -5,24 +5,10 @@ import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
-import { absoluteUrl, siteName } from "@/lib/seo";
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-  variable: "--font-mono",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
-});
-
-const ACCENT = "#a3e635";
-
+import { absoluteUrl, person, siteName } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { SiteShell } from "@/components/site/shell";
+import { LIME } from "@/components/site/theme";
 interface BlogDetailProps {
   params: Promise<{ slug: string }>;
 }
@@ -37,66 +23,47 @@ export default async function BlogDetailPage({ params }: BlogDetailProps) {
     const htmlContent = marked(content);
 
     return (
-      <div
-        className={`${mono.variable} ${inter.variable} relative min-h-[100dvh] bg-[#0a0a0a] text-neutral-300`}
-        style={{ fontFamily: "var(--font-sans)" }}
-      >
-        <div
-          className="pointer-events-none fixed inset-0 z-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
+      <SiteShell>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: data.title,
+            description: data.description,
+            datePublished: data.date,
+            url: absoluteUrl(`/blog/${slug}`),
+            mainEntityOfPage: absoluteUrl(`/blog/${slug}`),
+            image: absoluteUrl("/opengraph-image"),
+            author: person,
+            publisher: { "@id": absoluteUrl("/#person") },
           }}
         />
+        <article className="mx-auto max-w-3xl px-5 pb-28 pt-12 md:pt-20">
+          <Link href="/blog" className="inline-flex items-center gap-2 font-mono text-xs text-zinc-500 hover:text-[#a3e635]">
+            <span style={{ color: LIME }}>←</span> back to the blog
+          </Link>
+          <header className="mb-12 mt-8 space-y-4">
+            <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: LIME }}>{data.date}</p>
+            <h1 className="text-4xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl">{data.title}</h1>
+            {data.description && <p className="max-w-2xl text-lg leading-8 text-zinc-400">{data.description}</p>}
+          </header>
 
-        <main className="relative z-10 mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 md:py-20">
-          <div className="mb-10">
-            <Link
-              href="/blog"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-[#a3e635]"
-            >
-              <span style={{ color: ACCENT }}>~</span> cd ../
-              <span className="text-neutral-600">·</span>
-              <span>back to blog</span>
-            </Link>
-          </div>
-
-          <article>
-            <header className="mb-12 space-y-4">
-              <p
-                style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-                className="text-xs uppercase tracking-[0.2em]"
-              >
-                {data.date}
-              </p>
-              <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
-                {data.title}
-              </h1>
-              {data.description && (
-                <p className="max-w-2xl text-lg leading-8 text-neutral-400">
-                  {data.description}
-                </p>
-              )}
-            </header>
-
-            <div
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-              className="prose prose-invert prose-lg max-w-none
-                         prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
-                         prose-p:leading-7 prose-p:text-neutral-300
-                         prose-strong:text-white
-                         prose-a:text-[#a3e635] prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-4
-                         prose-code:rounded prose-code:bg-neutral-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-neutral-200 prose-code:before:content-none prose-code:after:content-none
-                         prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:rounded-none prose-pre:border prose-pre:border-neutral-800 prose-pre:bg-[#050505] prose-pre:p-5 prose-pre:text-neutral-200
-                         prose-blockquote:border-l-2 prose-blockquote:border-l-[#a3e635] prose-blockquote:bg-neutral-900/40 prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-neutral-300
-                         prose-hr:border-neutral-800
-                         prose-img:rounded-none prose-img:border prose-img:border-neutral-800
-                         prose-li:text-neutral-300"
-            />
-          </article>
-        </main>
-      </div>
+          <div
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+            className="prose prose-invert prose-lg max-w-none
+                       prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
+                       prose-p:leading-7 prose-p:text-zinc-300
+                       prose-strong:text-white
+                       prose-a:text-[#a3e635] prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-4
+                       prose-code:rounded prose-code:bg-white/[0.06] prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-zinc-200 prose-code:before:content-none prose-code:after:content-none
+                       prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:border prose-pre:border-white/[0.08] prose-pre:bg-[#0c0c0f] prose-pre:p-5 prose-pre:font-mono prose-pre:text-zinc-200
+                       prose-blockquote:border-l-2 prose-blockquote:border-l-[#a3e635] prose-blockquote:bg-white/[0.02] prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-zinc-300
+                       prose-hr:border-white/[0.08]
+                       prose-img:rounded-xl prose-img:border prose-img:border-white/[0.08]
+                       prose-li:text-zinc-300"
+          />
+        </article>
+      </SiteShell>
     );
   } catch {
     notFound();

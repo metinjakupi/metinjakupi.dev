@@ -1,22 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { SiteShell } from "@/components/site/shell";
+import { LIME } from "@/components/site/theme";
+import { SectionHead } from "@/components/site/ui";
 import { getPosts } from "@/lib/portfolio-data";
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-  variable: "--font-mono",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
-});
-
-const ACCENT = "#a3e635";
 
 const blogDescription =
   "Technical writing by Metin Jakupi on React, Next.js, frontend architecture, and product engineering.";
@@ -44,75 +31,24 @@ export default async function BlogPage() {
   const posts = await getPosts();
 
   return (
-    <div
-      className={`${mono.variable} ${inter.variable} relative flex min-h-[100dvh] flex-col bg-[#0a0a0a] text-neutral-300`}
-      style={{ fontFamily: "var(--font-sans)" }}
-    >
-      <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
-        }}
-      />
-
-      <main className="relative z-10 mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 md:py-20">
-        <div className="mb-10">
-          <Link
-            href="/"
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-[#a3e635]"
-          >
-            <span style={{ color: ACCENT }}>~</span> cd ../
-            <span className="text-neutral-600">·</span>
-            <span>back to home</span>
-          </Link>
-        </div>
-
-        <div className="mb-10 space-y-3">
-          <p
-            style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-            className="text-xs uppercase tracking-[0.2em]"
-          >
-            §writing
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Blog
-          </h1>
-          <p className="max-w-2xl leading-7 text-neutral-400">
-            {blogDescription}
-          </p>
-        </div>
-
-        <ul className="divide-y divide-neutral-800 border-y border-neutral-800">
+    <SiteShell>
+      <section className="mx-auto max-w-3xl space-y-10 px-5 pb-28 pt-16 md:pt-24">
+        <SectionHead kicker="writing" title="Blog" as="h1" />
+        <p className="-mt-4 max-w-2xl leading-7 text-zinc-400">{blogDescription}</p>
+        <ul className="divide-y divide-white/[0.07] rounded-xl border border-white/[0.07]">
           {posts.map((post, i) => (
-            <li key={post.slug} className="py-6">
-              <Link href={`/blog/${post.slug}`} className="group block space-y-2">
-                <div className="flex items-baseline gap-3">
-                  <span
-                    style={{ fontFamily: "var(--font-mono)", color: ACCENT }}
-                    className="text-xs"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p
-                    style={{ fontFamily: "var(--font-mono)" }}
-                    className="text-xs text-neutral-500"
-                  >
-                    {post.date}
-                  </p>
-                </div>
-                <h2 className="max-w-2xl text-2xl font-bold leading-snug text-white group-hover:text-[#a3e635]">
-                  {post.title}
-                </h2>
-                <p className="max-w-2xl leading-7 text-neutral-400">
-                  {post.description}
+            <li key={post.slug}>
+              <Link href={`/blog/${post.slug}`} className="group block space-y-2 p-6 transition-colors hover:bg-white/[0.02]">
+                <p className="font-mono text-xs text-zinc-500">
+                  <span style={{ color: LIME }}>{String(i + 1).padStart(2, "0")}</span> · {post.date}
                 </p>
+                <h2 className="text-2xl font-semibold leading-snug tracking-tight text-white group-hover:text-[#a3e635]">{post.title}</h2>
+                <p className="leading-7 text-zinc-400">{post.description}</p>
               </Link>
             </li>
           ))}
         </ul>
-      </main>
-    </div>
+      </section>
+    </SiteShell>
   );
 }
