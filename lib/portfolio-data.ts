@@ -70,9 +70,9 @@ export const domainExperience: DomainItem[] = [
       "Experience building web software for iGaming environments, including player-facing flows, operational interfaces, integrations, and state-heavy product experiences where reliability and clarity matter.",
   },
   {
-    title: "Sports Data Feeds",
+    title: "Sportsbook & Sports Data",
     summary:
-      "Experience working with ExeFeed and Sportradar integrations for sports and iGaming products, where live event data, odds updates, and feed reliability directly shape the user experience.",
+      "Maintaining sportsbook platforms in the iGaming industry, with .NET 8 services and ExeFeed and Sportradar integrations for live events, odds, and market updates.",
   },
 ];
 
@@ -160,14 +160,14 @@ export const projects: ProjectItem[] = [
       "Focus areas include ExeFeed and Sportradar feed handling, reliability, clear state updates, fast UI feedback, and interfaces that support high-frequency actions.",
   },
   {
-    title: "Sports Feed Integrations",
-    type: "Private integration work",
-    tech: "ExeFeed, Sportradar, live data",
-    role: "Integration and product engineering",
+    title: "Sportsbook & Feed Integrations",
+    type: "Private iGaming work",
+    tech: ".NET 8, ExeFeed, Sportradar",
+    role: "Sportsbook maintenance and feed integration",
     summary:
-      "Sports-data integration work around live events, market updates, and feed-driven product states.",
+      "Maintaining sportsbook platforms and .NET 8 services, integrating ExeFeed and Sportradar data to keep live events, odds, and betting markets up to date.",
     detail:
-      "Built around practical concerns like update freshness, message ordering, error handling, and keeping operational screens understandable when data changes quickly.",
+      "Focus areas include reliable feed processing, timely market updates, message ordering, and error handling to keep sportsbook operations running smoothly as live data changes.",
   },
   {
     title: "Dentistry Software",
