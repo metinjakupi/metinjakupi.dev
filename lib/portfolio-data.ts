@@ -35,7 +35,7 @@ export type PostMeta = {
 export const experience: ExperienceItem[] = [
   {
     role: "Software Engineer",
-    company: "Hoyo Tech",
+    company: "Septor",
     period: "2024 - Present",
     description:
       "Building scalable web applications and leading frontend delivery with a focus on reliable UI architecture, maintainable systems, and polished user experiences.",
