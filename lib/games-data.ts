@@ -6,6 +6,7 @@ import brickyardBooklet from "@/public/games/brickyard-booklet.jpg";
 import brickyardTown from "@/public/games/brickyard-town.jpg";
 import kebapHaus from "@/public/games/kebap-haus.jpg";
 import micro24 from "@/public/games/micro-24.jpg";
+import rinseRush from "@/public/games/rinse-rush.jpg";
 
 // Content for /games. Edit the copy here; the page only lays it out.
 
@@ -65,6 +66,17 @@ export const brickyard = {
 };
 
 export const moreWork: GameItem[] = [
+  {
+    slug: "rinse-rush",
+    title: "Rinse Rush",
+    type: "Car-wash arcade game",
+    tech: "Three.js, TypeScript, Blender",
+    href: "https://car-wash-game-ten.vercel.app",
+    cta: "Play Rinse Rush",
+    summary:
+      "Take over Grandpa Gus’s car wash: rinse, foam and polish dirty cars, clean interiors, hire a crew and grow the business while taking on rival chains.",
+    image: { src: rinseRush, alt: "Rinse Rush: the blue car-wash garage with a washer, turntable and game menu", caption: "Rinse Rush" },
+  },
   {
     slug: "kebap-haus",
     title: "Kebap Haus",

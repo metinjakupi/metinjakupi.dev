@@ -17,6 +17,9 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: siteName,
+  verification: {
+    google: "ficgMRern_YBDT65HLMiWCygeHaxpLNqcfBap4Z0Z0E",
+  },
   title: {
     default: siteTitle,
     template: `%s | ${siteName}`,

@@ -113,7 +113,7 @@ export default function Games() {
       {/* hero */}
       <section className="mx-auto max-w-6xl space-y-8 px-5 pb-16 pt-16 md:pt-24">
         <p className="font-mono text-sm text-zinc-500">
-          <span style={{ color: LIME }}>❯</span> ls ~/games <span className="text-zinc-400">→ brickyard/ kebap-haus/ micro-24/</span>
+          <span style={{ color: LIME }}>❯</span> ls ~/games <span className="text-zinc-400">→ brickyard/ rinse-rush/ kebap-haus/ micro-24/</span>
         </p>
         <h1 className="max-w-4xl text-[2.6rem] font-semibold leading-[1.03] tracking-[-0.035em] text-white sm:text-6xl lg:text-7xl">
           I build browser games and interactive 3D — <span style={{ color: LIME }}>playable from a link, on any laptop or phone.</span>
@@ -168,7 +168,7 @@ export default function Games() {
 
       {/* more games */}
       <section className="mx-auto max-w-6xl space-y-8 px-5 pt-28">
-        <SectionHead kicker="more games" title="Kebap Haus and Micro/24" />
+        <SectionHead kicker="more games" title="Rinse Rush, Kebap Haus and Micro/24" />
         <div className="grid gap-5 md:grid-cols-2">
           {moreWork.map((g) => (
             <Link key={g.slug} href={g.href} target="_blank" rel="noreferrer" className="group flex flex-col overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.02] transition hover:-translate-y-0.5 hover:border-[#a3e635]/40">

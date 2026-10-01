@@ -78,6 +78,18 @@ export const domainExperience: DomainItem[] = [
 
 export const projects: ProjectItem[] = [
   {
+    title: "Toccado",
+    type: "Free macOS app",
+    tech: "Swift, SwiftUI, Three.js, TypeScript",
+    role: "Designed, built, and shipped",
+    href: "https://toccado.com/",
+    cta: "Explore Toccado",
+    summary:
+      "A free Mac app that gives every keystroke a satisfying sound, with 25 profiles spanning mechanical switches, Keychron, and a classic typewriter.",
+    detail:
+      "Native menu bar app with offline audio and an Apple-notarized installer, paired with a playable 3D keyboard website and interactive sound previews.",
+  },
+  {
     title: "Vue Marquee Package",
     type: "Open-source package",
     tech: "Vue.js, JavaScript, npm",
