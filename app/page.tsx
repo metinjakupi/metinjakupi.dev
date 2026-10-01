@@ -191,7 +191,7 @@ function Terminal() {
   const lines: [string, string][] = [
     ["whoami", "metin jakupi — senior frontend engineer"],
     ["cat stack.txt", "react · next.js · typescript · node · three.js · webgpu · rust/wasm"],
-    ["ls ~/shipped", "toccado/  brickyard/  rinse-rush/  kebap-haus/  micro-24/  hotel-desaret/  activitea/  svg2icon/"],
+    ["ls ~/shipped", "toccado/  kitchform/  brickyard/  rinse-rush/  kebap-haus/  micro-24/  hotel-desaret/  activitea/  svg2icon/"],
     ["uptime", "8+ years shipping web software"],
   ];
   return (

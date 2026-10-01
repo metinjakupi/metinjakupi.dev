@@ -78,6 +78,18 @@ export const domainExperience: DomainItem[] = [
 
 export const projects: ProjectItem[] = [
   {
+    title: "Kitchform",
+    type: "Kitchen design app",
+    tech: "JavaScript, Three.js, SVG",
+    role: "Built end-to-end",
+    href: "https://kitchform.app/",
+    cta: "Explore Kitchform",
+    summary:
+      "A browser-based kitchen planner with synchronized 3D views, floor plans, and wall elevations for designing rooms, arranging cabinets, and exploring finishes.",
+    detail:
+      "Combines precise dimensions, layout checks, material customization, and undo/redo with saved projects and exportable drawings, component schedules, and JSON backups.",
+  },
+  {
     title: "Toccado",
     type: "Free macOS app",
     tech: "Swift, SwiftUI, Three.js, TypeScript",

@@ -9,6 +9,7 @@ import svg2icon from "@/public/work/svg2icon.jpg";
 import cssFormatter from "@/public/work/css-formatter.jpg";
 import vueMarquee from "@/public/work/vue-marquee.jpg";
 import toccado from "@/public/work/toccado.jpg";
+import kitchform from "@/public/work/kitchform.jpg";
 
 // Everything the redesign options show, in one place, built from the existing data files.
 
@@ -24,6 +25,7 @@ export type WorkItem = {
 };
 
 const images: Record<string, [StaticImageData, string]> = {
+  Kitchform: [kitchform, "Kitchform homepage with a warm kitchen illustration and a call to start designing"],
   Toccado: [toccado, "Toccado website with a playable 3D keyboard, oversized wordmark, and always-free Mac download"],
   "Hotel Desaret": [hotelDesaret, "Hotel Desaret website: a lakeside hotel on Lake Ohrid with a booking call to action"],
   "Faith Connexion": [faithConnexion, "Faith Connexion's Shopify boutique home page"],
@@ -48,7 +50,7 @@ export const games: WorkItem[] = [
 ];
 
 /** Public client and personal work, most visual first. */
-export const work: WorkItem[] = ["Toccado", "Hotel Desaret", "Faith Connexion", "Activitea Coffee", "SVG2Icon", "CSS Formatter", "Vue Marquee Package"]
+export const work: WorkItem[] = ["Toccado", "Kitchform", "Hotel Desaret", "Faith Connexion", "Activitea Coffee", "SVG2Icon", "CSS Formatter", "Vue Marquee Package"]
   .map((title) => projects.find((p) => p.title === title))
   .filter((p): p is (typeof projects)[number] => !!p)
   .map((p) => ({ title: p.title, kind: p.type, tech: p.tech, summary: p.summary, href: p.href, cta: p.cta, image: images[p.title]?.[0], alt: images[p.title]?.[1] }));
