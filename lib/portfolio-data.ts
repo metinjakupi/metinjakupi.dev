@@ -36,9 +36,16 @@ export const experience: ExperienceItem[] = [
   {
     role: "Software Engineer",
     company: "Septor",
-    period: "2024 - Present",
+    period: "2026 - Present",
     description:
       "Building scalable web applications and leading frontend delivery with a focus on reliable UI architecture, maintainable systems, and polished user experiences.",
+  },
+  {
+    role: "Software Engineer",
+    company: "Hoyo Tech",
+    period: "2024 - 2026",
+    description:
+      "Built scalable web applications and led frontend delivery with a focus on reliable UI architecture, maintainable systems, and polished user experiences.",
   },
   {
     role: "Lead Software Engineer",
