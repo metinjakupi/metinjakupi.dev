@@ -5,11 +5,12 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteShell } from "@/components/site/shell";
 import { LIME } from "@/components/site/theme";
 import { ContactCta } from "@/components/site/contact-cta";
+import { Expertise } from "@/components/site/expertise";
 import { buttonGhost, buttonPrimary, SectionHead, Tags, WorkCard } from "@/components/site/ui";
-import { brickyard, process as buildProcess } from "@/lib/games-data";
+import { brickyard } from "@/lib/games-data";
 import { getPosts } from "@/lib/portfolio-data";
 import { absoluteUrl, person, siteDescription, siteName, siteTitle } from "@/lib/seo";
-import { experience, games, numbers, privateWork, services, work } from "@/lib/showcase";
+import { experience, games, numbers, privateWork, work } from "@/lib/showcase";
 
 export const metadata: Metadata = {
   title: { absolute: siteTitle },
@@ -132,30 +133,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* services + process */}
-      <section id="services" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">
-        <SectionHead kicker="services" title="What I can build for you" note="From a playable prototype to a tested launch." />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
-            <article key={s.title} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 transition hover:border-white/15">
-              <span className="grid h-10 w-10 place-items-center rounded-lg border border-white/10" style={{ color: LIME }}>
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={s.icon} /></svg>
-              </span>
-              <h3 className="mt-5 font-semibold text-white">{s.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-zinc-400">{s.body}</p>
-            </article>
-          ))}
-        </div>
-        <ol className="grid gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07] md:grid-cols-5">
-          {buildProcess.map((step, i) => (
-            <li key={step.title} className="bg-[#0c0c0f] p-5">
-              <p className="font-mono text-xs text-zinc-500"><span style={{ color: LIME }}>{String(i + 1).padStart(2, "0")}</span> · {step.when}</p>
-              <h3 className="mt-2 font-semibold text-white">{step.title}</h3>
-              <p className="mt-1.5 text-sm leading-6 text-zinc-400">{step.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <Expertise />
 
       {/* experience */}
       <section id="experience" className="mx-auto max-w-6xl scroll-mt-24 space-y-8 px-5 pt-28">

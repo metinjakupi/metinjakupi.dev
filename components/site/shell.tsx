@@ -5,7 +5,7 @@ import { contact } from "@/lib/showcase";
 const NAV: [string, string][] = [
   ["Work", "/#work"],
   ["Games", "/games"],
-  ["Services", "/#services"],
+  ["Expertise", "/#services"],
   ["Experience", "/#experience"],
   ["Blog", "/blog"],
 ];

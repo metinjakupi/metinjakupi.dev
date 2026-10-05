@@ -75,10 +75,38 @@ export const numbers = [
   { value: "60 fps", label: "WebGPU games, WebGL 2 fallback" },
 ];
 
-/** What people can hire Metin for. `icon` is an SVG path on a 24×24 grid. */
+/** Capabilities, with examples from shipped work. */
+function projectExamples(titles: string[]) {
+  return titles.flatMap((title) => {
+    const project = projects.find((p) => p.title === title);
+    return project?.href ? [{ label: project.title, href: project.href }] : [];
+  });
+}
+
 export const services = [
-  { title: "Web products & apps", body: "React and Next.js front ends that stay fast and easy to change: dashboards, customer apps, booking and shop flows.", icon: "M4 5h16v11H4zM8 20h8M12 16v4" },
-  { title: "Browser games", body: "Casual, brand and learning games that open from a link and run on laptops and phones, like Brickyard and Kebap Haus.", icon: "M6 12h4M8 10v4M15 11h.01M18 13h.01M7 6h10a5 5 0 0 1 5 5v2a5 5 0 0 1-9 3H11a5 5 0 0 1-9-3v-2a5 5 0 0 1 5-5z" },
-  { title: "Interactive 3D", body: "Spaces and products people can explore in the browser, built with WebGPU and three.js, like Micro/24.", icon: "M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5" },
-  { title: "Sites & Shopify", body: "Marketing sites and Shopify storefronts that look sharp and load quickly, like Hotel Desaret and Faith Connexion.", icon: "M3 7h18l-2 12H5zM8 7a4 4 0 0 1 8 0" },
+  {
+    title: "Web & native applications",
+    body: "Customer apps, internal tools and desktop software. Clear interfaces backed by maintainable architecture.",
+    examples: projectExamples(["Toccado", "Activitea Coffee"]),
+  },
+  {
+    title: "Websites & commerce",
+    body: "Brand websites and Shopify storefronts, with care for product discovery, checkout and performance.",
+    examples: projectExamples(["Hotel Desaret", "Faith Connexion"]),
+  },
+  {
+    title: "Games & interactive 3D",
+    body: "Playable browser games, product configurators and spaces people can explore. No installation required.",
+    examples: [
+      { label: "Brickyard", href: brickyard.href },
+      ...projectExamples(["Kitchform"]),
+    ],
+  },
+  {
+    title: "Platforms & integrations",
+    body: "Sportsbook platforms, live data feeds and business workflows. Reliable updates across connected systems.",
+    examples: [
+      { label: "Sportsbook & sports-data experience", href: "#experience" },
+    ],
+  },
 ];
